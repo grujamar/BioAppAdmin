@@ -1,0 +1,137 @@
+﻿/***************ADMIN BIO***************/
+#IdForModal .openModalButton {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #3e525c;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+#IdForModal .modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    text-align: center;
+}
+
+#IdForModal .modalDialog > div {
+    width: 400px;
+    position: relative;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    margin: 10% auto;
+}
+
+#IdForModal .close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+#IdForModal .close:hover {
+    background: #00d9ff;
+}
+
+#IdForModal .txtmodal {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+
+
+/**************************/
+
+/*submit section*/
+#submit .submit-span {
+    color: red;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#submit .submit-span-none {
+    white-space: normal;
+}
+
+#submit .submit-label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#submit .submit-textbox,
+#submit .price-textbox,
+.search-section .submit-textbox {
+    font-size: 14px;
+    border: 1.5px solid #bdbdbd;
+    background: rgba(255,255,255,0);
+    box-shadow: 0 0 1px #bdbdbd inset;
+    padding: 3px 10px;
+    width: 50%;
+}
+
+#submit .submit-dropdownlist,
+.search-section .submit-dropdownlist {
+    font-size: 14px;
+    border: 1.5px solid #bdbdbd;
+    background: rgba(255,255,255,0);
+    box-shadow: 0 0 1px #bdbdbd inset;
+    padding: 3px 10px;
+    width: 80%;
+}
+
+    #submit .submit-textbox:focus,
+    #submit.price-textbox:focus,
+    #submit .submit-dropdownlist:focus,
+    .search-section .submit-textbox:focus,
+    .search-section .submit-dropdownlist:focus {
+        background: rgba(220,220,220,0.3);
+        color: #000;
+        border: 1.5px solid darkgray;
+        box-shadow: none;
+    }
+
+#submit .submit-example {
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+#submit .submit-customValidator {
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+}
