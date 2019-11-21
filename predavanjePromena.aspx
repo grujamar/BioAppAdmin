@@ -76,50 +76,73 @@
             <div id="afterStarting" runat="server" class="after-starting">
                 <section class="my-2">
                     <div class="container">
-                        <!--section checkbox start-->
-                        <section class="checkbox-section">
-                            <asp:Label 
-                                ID="lblpredmeti"
-                                runat="server" 
-                                Text="Predmeti" 
-                                AssociatedControlID="CheckBoxList1"
-                                Font-Underline="true"
-                                Font-Bold="true"
-                                Font-Size="Medium"
-                                />
-                            <asp:CheckBoxList 
-                                ID="CheckBoxList1"
-                                runat="server"
-                                Font-Italic="false"
-                                Font-Names="Times New Roman"
-                                CssClass="mycheckbox"
-                                Font-Size="Medium" DataSourceID="dsPredmeti" DataTextField="NazivPredmeta" DataValueField="IDPredmet" TabIndex="1"
-                                >
-                                <asp:ListItem></asp:ListItem>
-                            </asp:CheckBoxList>
-                            <asp:SqlDataSource ID="dsPredmeti" runat="server" ConnectionString="<%$ ConnectionStrings:BioConnectionString %>" SelectCommand="SELECT TOP (100) PERCENT vPredavanjaNastavnika.IDPredmet, vPredavanjaNastavnika.NazivPredmeta, vPredavanjaNastavnika.BrojAkreditacije FROM vPredavanjaNastavnika INNER JOIN TerminPredavanja ON vPredavanjaNastavnika.IDOsoba = TerminPredavanja.IDOsobaPredavac WHERE (TerminPredavanja.IDTerminPredavanja = @idterminpredavanja) ORDER BY vPredavanjaNastavnika.NazivPredmeta, vPredavanjaNastavnika.SifraPredmeta">
-                                <SelectParameters>
-                                    <asp:SessionParameter Name="idterminpredavanja" SessionField="predavanjePromena-IDTerminPredavanja" />
-                                </SelectParameters>
-                            </asp:SqlDataSource>
-                            <asp:CustomValidator ID="cvCheckbox" runat="server" ErrorMessage="" Display="Dynamic" ForeColor="Red" CssClass="submit-customValidator" OnServerValidate="CheckBoxList1_ServerValidation" ValidationGroup="AddCustomValidatorToGroup"></asp:CustomValidator>
-                        </section><!--section checkbox end-->
-                        <section class="mb-5 search-section">
-                            <!--div ddlizbor start-->
-                            <div class="col-12 col-lg-2 mb-1 mb-md-4">
-                                <asp:Label id="spanizbor" runat="server" CssClass="submit-span">*</asp:Label><asp:Label id="lblizbor" runat="server" CssClass="submit-label ml-2">Tip predavanja:</asp:Label> 
-                            </div>
-                            <div class="col-12 col-lg-5">
-                                <asp:DropDownList ID="ddlizbor" runat="server" AppendDataBoundItems="True" CssClass="submit-dropdownlist" OnSelectedIndexChanged="ddlizbor_SelectedIndexChanged" TabIndex="2" DataSourceID="dsTipPredavanja" DataTextField="TipPredavanja" DataValueField="IDTipPredavanja">
-                                <asp:ListItem Selected="True" Value="0">--Izaberite--</asp:ListItem>
-                                </asp:DropDownList>
-                                <asp:SqlDataSource ID="dsTipPredavanja" runat="server" ConnectionString="<%$ ConnectionStrings:BioConnectionString %>" SelectCommand="SELECT [IDTipPredavanja], [TipPredavanja] FROM [vTipPredavanja]"></asp:SqlDataSource>
-                            </div>
-                            <div class="col-12 col-lg-5 mb-3 mb-lg-0">
-                                <asp:CustomValidator runat="server" id="cvizbor" controltovalidate="ddlizbor" errormessage="" OnServerValidate="Cvizbor_ServerValidate" CssClass="submit-customValidator" Display="Dynamic" ForeColor="Red" ValidateEmptyText="true" ValidationGroup="AddCustomValidatorToGroup"/>
-                            </div><!--div ddlizbor end-->
-                        </section>
                         <div class="row">
+                            <div class="col-12 col-md-8 mb-1 text-left">
+                                <!--section checkbox start-->
+                                <section class="checkbox-section">
+                                    <asp:Label 
+                                        ID="lblpredmeti"
+                                        runat="server" 
+                                        Text="Predmeti" 
+                                        AssociatedControlID="CheckBoxList1"
+                                        Font-Underline="true"
+                                        Font-Bold="true"
+                                        Font-Size="Medium"
+                                        />
+                                    <asp:CheckBoxList 
+                                        ID="CheckBoxList1"
+                                        runat="server"
+                                        Font-Italic="false"
+                                        Font-Names="Times New Roman"
+                                        CssClass="mycheckbox"
+                                        Font-Size="Medium" DataSourceID="dsPredmeti" DataTextField="NazivPredmeta" DataValueField="IDPredmet" TabIndex="1"
+                                        >
+                                        <asp:ListItem></asp:ListItem>
+                                    </asp:CheckBoxList>
+                                    <asp:SqlDataSource ID="dsPredmeti" runat="server" ConnectionString="<%$ ConnectionStrings:BioConnectionString %>" SelectCommand="SELECT TOP (100) PERCENT vPredavanjaNastavnika.IDPredmet, vPredavanjaNastavnika.NazivPredmeta, vPredavanjaNastavnika.BrojAkreditacije FROM vPredavanjaNastavnika INNER JOIN TerminPredavanja ON vPredavanjaNastavnika.IDOsoba = TerminPredavanja.IDOsobaPredavac WHERE (TerminPredavanja.IDTerminPredavanja = @idterminpredavanja) ORDER BY vPredavanjaNastavnika.NazivPredmeta, vPredavanjaNastavnika.SifraPredmeta">
+                                        <SelectParameters>
+                                            <asp:SessionParameter Name="idterminpredavanja" SessionField="predavanjePromena-IDTerminPredavanja" />
+                                        </SelectParameters>
+                                    </asp:SqlDataSource>
+                                    <asp:CustomValidator ID="cvCheckbox" runat="server" ErrorMessage="" Display="Dynamic" ForeColor="Red" CssClass="submit-customValidator" OnServerValidate="CheckBoxList1_ServerValidation" ValidationGroup="AddCustomValidatorToGroup"></asp:CustomValidator>
+                                </section><!--section checkbox end-->
+                                <section class="mb-5 search-section">
+                                    <!--div ddlizbor start-->
+                                    <div class="col-12 col-lg-4 mb-1 mb-md-4">
+                                        <asp:Label id="spanizbor" runat="server" CssClass="submit-span">*</asp:Label><asp:Label id="lblizbor" runat="server" CssClass="submit-label ml-2">Tip predavanja:</asp:Label> 
+                                    </div>
+                                    <div class="col-12 col-lg-5">
+                                        <asp:DropDownList ID="ddlizbor" runat="server" AppendDataBoundItems="True" CssClass="submit-dropdownlist" OnSelectedIndexChanged="ddlizbor_SelectedIndexChanged" TabIndex="2" DataSourceID="dsTipPredavanja" DataTextField="TipPredavanja" DataValueField="IDTipPredavanja">
+                                        <asp:ListItem Selected="True" Value="0">--Izaberite--</asp:ListItem>
+                                        </asp:DropDownList>
+                                        <asp:SqlDataSource ID="dsTipPredavanja" runat="server" ConnectionString="<%$ ConnectionStrings:BioConnectionString %>" SelectCommand="SELECT [IDTipPredavanja], [TipPredavanja] FROM [vTipPredavanja]"></asp:SqlDataSource>
+                                    </div>
+                                    <div class="col-12 col-lg-5 mb-3 mb-lg-0">
+                                        <asp:CustomValidator runat="server" id="cvizbor" controltovalidate="ddlizbor" errormessage="" OnServerValidate="Cvizbor_ServerValidate" CssClass="submit-customValidator" Display="Dynamic" ForeColor="Red" ValidateEmptyText="true" ValidationGroup="AddCustomValidatorToGroup"/>
+                                    </div><!--div ddlizbor end-->
+                                </section>
+                            </div>
+                            <div class="col-12 col-md-4 mb-1 text-left">
+                                <section class="right-section mt-4">
+                                    <div class="mb-2">
+                                        <asp:Label id="lblTimeStart" runat="server" style="font-weight:bold;font-size:13px;">Početak</asp:Label>
+                                        <asp:TextBox ID="txtTimeStart" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="3" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
+                                        <asp:CustomValidator runat="server" id="cvTimeStart" controltovalidate="txtTimeStart" errormessage="" OnServerValidate="cvTimeStart_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px; font-weight:bold;" ValidateEmptyText="true"/>
+                                    </div>
+                                    <div class="mb-2">
+                                        <asp:Label id="lblTimeEnd" runat="server" style="font-weight:bold;font-size:13px;">Kraj</asp:Label>
+                                        <asp:TextBox ID="txtTimeEnd" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="4" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
+                                        <asp:CustomValidator runat="server" id="cvTimeEnd" controltovalidate="txtTimeEnd" errormessage="" OnServerValidate="cvTimeEnd_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px; font-weight:bold;" ValidateEmptyText="true"/>
+                                    </div>
+                                    <div class="mb-2 mt-4">
+                                        <asp:Button ID="btnChangeTime" runat="server" CssClass="btn btn-outline-secondary btn-sm px-1 ml-5" Text="Promeni vreme termina" OnClick="btnChangeTime_Click" OnClientClick="unhook()"/><br>
+                                        <asp:Label ID="errStoredProcedure" runat="server" style="font-size:13px; font-weight:bold;" ForeColor="Red"></asp:Label>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        
+                        <div class="row" runat="server" id="afterChangingTime1">
                             <div class="col-12 col-md-2 mb-1">
                             </div>
                             <div class="col-12 col-md-8 mb-1 text-center">
@@ -130,11 +153,11 @@
                                                 <div class="col-8">
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6">
-                                                            <asp:TextBox ID="txtIndexNumber" runat="server" CssClass="submit-textbox" maxlength="20" placeholder="Upišite ID" TabIndex="3"></asp:TextBox>
+                                                            <asp:TextBox ID="txtIndexNumber" runat="server" CssClass="submit-textbox" maxlength="20" placeholder="Upišite ID" TabIndex="5"></asp:TextBox>
                                                             <br><p class="notification" style="margin-bottom: 1px;"><asp:Label id="lblnotification" runat="server" style="font-size:11px; font-weight: bold">Broj indeksa ili korisničko ime profesora.</asp:Label></p>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
-                                                            <asp:Button ID="btnAddIndex" runat="server" Text="+ Dodaj prisustvo" CssClass="btn btn-secondary px-3" OnClick="btnAddIndex_Click" OnClientClick="unhook()" TabIndex="2"/>
+                                                            <asp:Button ID="btnAddIndex" runat="server" Text="+ Dodaj prisustvo" CssClass="btn btn-secondary px-3" OnClick="btnAddIndex_Click" OnClientClick="unhook()" TabIndex="6"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -152,7 +175,7 @@
                     </div>
                 </section>
                 <!--section GridView start-->
-                <section class="section-gridview mb-3 mb-md-5">
+                <section class="section-gridview mb-3 mb-md-5" runat="server" id="afterChangingTime2">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12 col-md-9" style="overflow-y: scroll; overflow-x: hidden; height: 768px;">

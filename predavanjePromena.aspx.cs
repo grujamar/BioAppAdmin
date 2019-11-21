@@ -14,6 +14,8 @@ public partial class predavanjePromena : System.Web.UI.Page
     public string SetLightGray = Constants.SetLightGray;
     public string SetWhite = Constants.SetWhite;
     public string SetDarkGray = Constants.SetDarkGray;
+    public int IDTerminPredavanja = 0;
+    public int IDLokacije = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,6 +26,7 @@ public partial class predavanjePromena : System.Web.UI.Page
             Response.Redirect("GreskaBaza.aspx", false);
         }
         AvoidCashing();
+        
 
         try
         {
@@ -45,18 +48,33 @@ public partial class predavanjePromena : System.Web.UI.Page
                 HttpRequest req = new HttpRequest("", "http://www.pis.rs", decryptedParameters);
 
                 string data = req.QueryString["IDTerminPredavanja"];
-                Session["predavanjePromena-IDTerminPredavanja"] = data;
+                IDTerminPredavanja = Convert.ToInt32(data);
+                
+                Session["predavanjePromena-IDTerminPredavanja"] = IDTerminPredavanja;
 
                 if (!Page.IsPostBack)
                 {
                     txtIndexNumber.Attributes.Add("onkeydown", "if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('" + btnAddIndex.UniqueID + "').click();return false;}} else {return true}; ");
 
+                    log.Info("IDTerminPredavanja is: " + IDTerminPredavanja);
                     //get IDLokacija with IDTerminPredavanja
-                    int IDLokacije = utility.getIDLokacijeAdmin(Convert.ToInt32(data));
+                    IDLokacije = utility.getIDLokacijeAdmin(Convert.ToInt32(IDTerminPredavanja));
                     Session["predavanjePromena-IDLokacija"] = IDLokacije;
 
+                    txtTimeStart.Text = (utility.getPocetakTermina(IDTerminPredavanja)).ToString();
+                    txtTimeEnd.Text = (utility.getKrajTermina(IDTerminPredavanja)).ToString();
 
+                    if (txtTimeEnd.Text == (TimeSpan.FromHours(0) + TimeSpan.FromMinutes(0) + TimeSpan.FromSeconds(0)).ToString())
+                    {
+                        txtTimeEnd.Text = string.Empty;
+                        ChangeVisibilityAfterChangingTime(false);
+                    }
+                    else
+                    {
+                        ChangeVisibilityAfterChangingTime(true);
+                    }
 
+                    errStoredProcedure.Text = string.Empty;
 
                 }
             }
@@ -80,30 +98,24 @@ public partial class predavanjePromena : System.Web.UI.Page
 
     protected void Page_PreRenderComplete(object sender, EventArgs e)
     {
-        //int count = CheckBoxList1.Items.Count;
-        //foreach (ListItem item in CheckBoxList1.Items)
-        //{
-        //    string nesto = item.Text;
-        //    int itemvalue = Convert.ToInt32(item.Value);
-        //}
         Utility utility = new Utility();
-        Check_CheckBoxList_BasedOnIDTerminPredavanja(utility, Session["predavanjePromena-IDTerminPredavanja"].ToString());
-        Set_DropDownList_BasedOnIDTerminPredavanja(utility, Session["predavanjePromena-IDTerminPredavanja"].ToString());
+        Check_CheckBoxList_BasedOnIDTerminPredavanja(utility, IDTerminPredavanja);
+        Set_DropDownList_BasedOnIDTerminPredavanja(utility, IDTerminPredavanja);
     }
 
 
-    protected void Check_CheckBoxList_BasedOnIDTerminPredavanja(Utility utility, string data)
+    protected void Check_CheckBoxList_BasedOnIDTerminPredavanja(Utility utility, int data)
     {
         try
         {
             List<int> IDPredmetiList = new List<int>();
-            IDPredmetiList = utility.getCheckedIDPredmet(Convert.ToInt32(data));
+            IDPredmetiList = utility.getCheckedIDPredmet(data);
             foreach (ListItem item in CheckBoxList1.Items)
             {
                 if (!item.Selected)
                 {
                     for (int j = 0; j < IDPredmetiList.Count; j++)
-                    {
+                    {                       
                         if (IDPredmetiList[j] == Convert.ToInt32(item.Value))
                             CheckBoxList1.Items.FindByValue(item.Value).Selected = true;
                     }
@@ -117,11 +129,11 @@ public partial class predavanjePromena : System.Web.UI.Page
         }
     }
 
-    protected void Set_DropDownList_BasedOnIDTerminPredavanja(Utility utility, string data)
+    protected void Set_DropDownList_BasedOnIDTerminPredavanja(Utility utility, int data)
     {
         try
         {
-            int IdTipPredavanja = utility.getIDTipPredavanja(Convert.ToInt32(data));
+            int IdTipPredavanja = utility.getIDTipPredavanja(data);
             ddlizbor.SelectedValue = IdTipPredavanja.ToString();
         }
         catch (Exception ex)
@@ -148,8 +160,8 @@ public partial class predavanjePromena : System.Web.UI.Page
 
                 int Result = 0;
 
-                utility.upisivanjePrisustvaRucno(txtIndexNumber.Text, Convert.ToInt32(Session["predavanjePromena-IDLokacija"]), dateOnly, timeOnly, out Result);
-                log.Info("upisivanjePrisustvaRucno : " + " BrojIndeksa - " + txtIndexNumber.Text + " " + ". IDLokacije - " + Convert.ToInt32(Session["predavanjePromena-IDLokacija"]) + " " + ". Datum - " + dateOnly + " " + ". Vreme - " + timeOnly + " " + ". Rezultat - " + Result);
+                utility.upisivanjePrisustvaRucno(txtIndexNumber.Text, IDLokacije, dateOnly, timeOnly, out Result);
+                log.Info("upisivanjePrisustvaRucno : " + " BrojIndeksa - " + txtIndexNumber.Text + " " + ". IDLokacije - " + IDLokacije + " " + ". Datum - " + dateOnly + " " + ". Vreme - " + timeOnly + " " + ". Rezultat - " + Result);
                 if (Result != 0)
                 {
                     throw new Exception("Result from database is diferent from 0. Result is: " + Result);
@@ -183,23 +195,14 @@ public partial class predavanjePromena : System.Web.UI.Page
     protected void btnBack_Click(object sender, EventArgs e)
     {
         string PageToRedirect = "Index.aspx";
-        //int idTerminPredavanjaIzmena = 0;
+
         try
         {
-            /*
-            string idTerminPredavanjaIzmena1 = @"IDTerminPredavanja=" + idTerminPredavanjaIzmena;
-            log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "Back button. idTerminPredavanjaIzmena is - " + idTerminPredavanjaIzmena1);
-            string editParameters = AuthenticatedEncryption.AuthenticatedEncryption.Encrypt(idTerminPredavanjaIzmena1, Constants.CryptKey, Constants.AuthKey);
-            editParameters = editParameters.Replace("+", "%252b");
-            log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "Back button. Page to redirect. editParameters is - " + editParameters);
-            */
-            //Response.Redirect(string.Format("~/" + PageToRedirect + "?d={0}", editParameters), false);
             Response.Redirect(string.Format("~/" + PageToRedirect, false));
         }
         catch (Exception ex)
         {
             log.Info("Error while opening the Page: " + PageToRedirect + " . Error message: " + ex.Message);
-            //throw new Exception("Error while opening the Page: " + PageToRedirect + " . Error message: " + ex.Message);
         }
     }
 
@@ -272,9 +275,6 @@ public partial class predavanjePromena : System.Web.UI.Page
         }
     }
 
-
-    ///---------------------------------IZBOR-----------------------------------------------------
-
     protected void Cvizbor_ServerValidate(object source, ServerValidateEventArgs args)
     {
         try
@@ -297,15 +297,12 @@ public partial class predavanjePromena : System.Web.UI.Page
         int SelectedValue = Convert.ToInt32(ddlizbor.SelectedValue);
         if (SelectedValue != 0)
         {
-            //ddlizbor.BorderColor = ColorTranslator.FromHtml(SetGray);
             Session["Predavanja-event_controle-DropDownList"] = ((DropDownList)sender);
             SetFocusOnDropDownLists();
         }
     }
 
     ///-------------------------------------------------------------------------------------------
-    ///
-
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -369,6 +366,82 @@ public partial class predavanjePromena : System.Web.UI.Page
         catch (InvalidCastException inEx)
         {
             log.Error("Problem with setting focus on control. Error: " + inEx);
+        }
+    }
+
+    protected void btnChangeTime_Click(object sender, EventArgs e)
+    {
+        string opisGreske = string.Empty;
+        try
+        {
+            Page.Validate("ChangeTimeValidatorToGroup");
+
+            if (Page.IsValid)
+            {
+                TimeSpan pocetak = TimeSpan.Parse(txtTimeStart.Text);
+                TimeSpan kraj = TimeSpan.Parse(txtTimeEnd.Text);
+
+                Utility utility = new Utility();
+
+                utility.spPromenaVremenaTerminaAdmin(IDTerminPredavanja, pocetak, kraj, out opisGreske, out int result);
+                log.Info("spPromenaVremenaTerminaAdmin : " + " IDTerminPredavanja - " + IDTerminPredavanja + " " + ". pocetak - " + pocetak + " " + ". kraj - " + kraj + " " + ". opisGreske - " + opisGreske + " " + ". result - " + result);
+                if (result != 0)
+                {
+                    throw new Exception("Result from database is diferent from 0. Result is: " + result);
+                }
+                else
+                {
+                    ChangeVisibilityAfterChangingTime(true);
+                }
+
+
+            }
+            else if (!Page.IsValid)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "erroralert", "erroralert();", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            log.Error("btnChangeTime submit error. " + ex.Message);
+            ScriptManager.RegisterStartupScript(this, GetType(), "erroralert", "erroralert();", true);
+            errStoredProcedure.Text = opisGreske;
+        }
+    }
+
+    protected void ChangeVisibilityAfterChangingTime(bool Value)
+    {
+        afterChangingTime1.Visible = Value;
+        afterChangingTime2.Visible = Value;
+    }
+
+    protected void cvTimeStart_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        try
+        {
+            string ErrorMessage1 = string.Empty;
+            args.IsValid = Utils.ValidateTimeStartEnd(txtTimeStart.Text,  out ErrorMessage1);
+            cvTimeStart.ErrorMessage = ErrorMessage1;
+        }
+        catch (Exception)
+        {
+            cvTimeStart.ErrorMessage = string.Empty;
+            args.IsValid = false;
+        }
+    }
+
+    protected void cvTimeEnd_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        try
+        {
+            string ErrorMessage1 = string.Empty;
+            args.IsValid = Utils.ValidateTimeStartEnd(txtTimeEnd.Text, out ErrorMessage1);
+            cvTimeEnd.ErrorMessage = ErrorMessage1;
+        }
+        catch (Exception)
+        {
+            cvTimeEnd.ErrorMessage = string.Empty;
+            args.IsValid = false;
         }
     }
 }

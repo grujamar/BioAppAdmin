@@ -256,20 +256,6 @@ WHERE        (dbo.TerminPredavanja.IDTerminPredavanja = @idterminpredavanja)";
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void loginPredavanja(string Username, int IDLokacija, out int idLogPredavanja, out int idOsoba, out string Ime, out int result)
     {
         using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
@@ -910,6 +896,48 @@ WHERE        (IDLokacija = @idlokacije)";
         return Pocetak;
     }
 
+    public TimeSpan getKrajTermina(int IdTerminPredavanja)
+    {
+        TimeSpan Kraj = DateTime.Now.TimeOfDay;
+
+        string upit = @"SELECT        Kraj AS Expr1
+                        FROM            dbo.TerminPredavanja
+                        WHERE        (IDTerminPredavanja = @idterminpredavanja)";
+
+        using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
+        {
+            using (SqlCommand objCmd = new SqlCommand(upit, objConn))
+            {
+                try
+                {
+                    objCmd.CommandType = System.Data.CommandType.Text;
+                    objCmd.Parameters.Add("@idterminpredavanja", System.Data.SqlDbType.Int).Value = IdTerminPredavanja;
+                    objConn.Open();
+                    SqlDataReader reader = objCmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        try
+                        {
+                            Kraj = reader.GetTimeSpan(0);
+                        }
+                        catch (Exception)
+                        {
+                            Kraj = TimeSpan.FromHours(0) + TimeSpan.FromMinutes(0) + TimeSpan.FromSeconds(0);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Error while getting Kraj in function getKrajTermina. " + ex.Message);
+                    throw new Exception("Error while getting Kraj in function getKrajTermina. " + ex.Message);
+                }
+            }
+        }
+
+        return Kraj;
+    }
+
+
 
     public void upisiNazivFajla(int IdTerminPredavanja, string nazivFajla)
     {
@@ -938,6 +966,49 @@ WHERE        (IDLokacija = @idlokacije)";
             }
         }
     }
+
+
+
+    public void spPromenaVremenaTerminaAdmin(int IDTerminPredavanja, TimeSpan Pocetak, TimeSpan Kraj, out string opisGreske, out int result)
+    {
+        using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
+        {
+            using (SqlCommand objCmd = new SqlCommand("spPromenaVremenaTerminaAdmin", objConn))
+            {
+                try
+                {
+                    objCmd.CommandType = CommandType.StoredProcedure;
+
+                    objCmd.Parameters.Add("@idTerminPredavanja", System.Data.SqlDbType.Int).Value = IDTerminPredavanja;
+                    objCmd.Parameters.AddWithValue("@pocetak", Pocetak);
+                    objCmd.Parameters.AddWithValue("@kraj", Kraj);
+
+                    //Add the output parameter to the command object
+                    objCmd.Parameters.Add("@opisGreske", System.Data.SqlDbType.NVarChar, -1);
+                    objCmd.Parameters["@opisGreske"].Direction = System.Data.ParameterDirection.Output;
+
+                    objCmd.Parameters.Add("@err", System.Data.SqlDbType.Int);
+                    objCmd.Parameters["@err"].Direction = ParameterDirection.ReturnValue;
+
+                    objConn.Open();
+                    objCmd.ExecuteNonQuery();
+
+                    //Retrieve the values of the output parameters
+                    result = Convert.ToInt32(objCmd.Parameters["@err"].Value);
+                    opisGreske = objCmd.Parameters["@opisGreske"].Value.ToString();
+
+                    objConn.Close();
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Error in function spPromenaVremenaTerminaAdmin. " + ex.Message);
+                    throw new Exception("Error in function spPromenaVremenaTerminaAdmin. " + ex.Message);
+                }
+            }
+        }
+    }
+
+
     /*
     public List<vIzvestaji> pronadjiPromenljiveIzvestaj(int idOsoba)
     {

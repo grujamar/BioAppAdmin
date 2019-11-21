@@ -57,6 +57,30 @@ public static class Utils
     }
 
 
+    public static bool ValidateTimeStartEnd(string Time, out string ErrorMessage1)
+    {
+        bool returnValue = true;
+        ErrorMessage1 = string.Empty;
+
+        if (Time == string.Empty)
+        {
+            ErrorMessage1 = "Vreme je obavezno polje. ";
+            returnValue = false;
+        }
+        else if (!Regex.IsMatch(Time, @"([0-1]?[0-9]|2[0-3])\:[0-5][0-9]\:[0-5][0-9]"))
+        {
+            ErrorMessage1 = "Format nije dobar. ";
+            returnValue = false;
+        }
+        else
+        {
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
+
+
     public static bool ValidateListSize(int SelectedValue, List<int> brojAkreditacijeList, out string ErrorMessage)
     {
         bool returnValue = true;

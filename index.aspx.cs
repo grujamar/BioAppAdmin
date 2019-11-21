@@ -217,7 +217,7 @@ public partial class Index : System.Web.UI.Page
             if (txtdate.Text != string.Empty)
             {
                 DateTime datum = DateTime.ParseExact(txtdate.Text, "dd.MM.yyyy", null);
-                log.Debug("Datum je: " + datum);
+                log.Debug("Choosing Date for previous lecture is: " + datum);
                 string ErrorMessage1 = string.Empty;
 
                 args.IsValid = Utils.ValidateDate(datum, out ErrorMessage1);

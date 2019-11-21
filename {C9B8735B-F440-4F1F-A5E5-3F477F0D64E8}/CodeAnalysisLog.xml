@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio\2017\community\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="15.0">
+ <Targets>
+  <Target Name="C:\Users\Marko\AppData\Local\Temp\tmp9629.tmp.cadir\bin\App_Code.dll">
+   <Modules>
+    <Module Name="app_code.dll">
+     <Namespaces>
+      <Namespace Name="">
+       <Types>
+        <Type Name="Utility" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#brisanjePredavanjaIzTermina(System.Int32,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="874">Object 'objConn' can be disposed more than once in method 'Utility.brisanjePredavanjaIzTermina(int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 874</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#changePassword(System.String,System.String,System.String,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="144">Object 'objConn' can be disposed more than once in method 'Utility.changePassword(string, string, string, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 144</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IsAvailableConnection()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="39">Object 'objConn' can be disposed more than once in method 'Utility.IsAvailableConnection()'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 39</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#loginAdmin(System.String,System.String,System.Int32&amp;,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="79">Object 'objConn' can be disposed more than once in method 'Utility.loginAdmin(string, string, out int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 79</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#loginPredavanja(System.String,System.Int32,System.Int32&amp;,System.Int32&amp;,System.String&amp;,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="316">Object 'objConn' can be disposed more than once in method 'Utility.loginPredavanja(string, int, out int, out int, out string, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 316</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#logoutAdmin(System.Int32,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="110">Object 'objConn' can be disposed more than once in method 'Utility.logoutAdmin(int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 110</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#logoutPredavanja(System.Int32,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="347">Object 'objConn' can be disposed more than once in method 'Utility.logoutPredavanja(int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 347</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ponistavanjePrisustva(System.Int32,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="533">Object 'objConn' can be disposed more than once in method 'Utility.ponistavanjePrisustva(int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 533</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#upisivanjePrisustvaRucno(System.String,System.Int32,System.DateTime,System.TimeSpan,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="841">Object 'objConn' can be disposed more than once in method 'Utility.upisivanjePrisustvaRucno(string, int, DateTime, TimeSpan, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 841</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#zapocinjanjePredavanja(System.Int32,System.Int32,System.Int32,System.Int32&amp;,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="433">Object 'objConn' can be disposed more than once in method 'Utility.zapocinjanjePredavanja(int, int, int, out int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 433</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#zapocinjanjeTermina(System.Int32,System.DateTime,System.TimeSpan,System.Int32,System.Int32,System.Int32&amp;,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="391">Object 'objConn' can be disposed more than once in method 'Utility.zapocinjanjeTermina(int, DateTime, TimeSpan, int, int, out int, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 391</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#zavrsavanjePredavanja(System.Int32,System.TimeSpan,System.Decimal,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="467">Object 'objConn' can be disposed more than once in method 'Utility.zavrsavanjePredavanja(int, TimeSpan, decimal, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 467</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#zavrsavanjeTermina(System.Int32,System.TimeSpan,System.Int32&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2019-11-21 10:07:32Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Marko\Desktop\Projekti SVI\BioAppAdmin\BioAppAdmin\App_Code" File="Utility.cs" Line="501">Object 'objConn' can be disposed more than once in method 'Utility.zavrsavanjeTermina(int, TimeSpan, out int)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 501</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202">
+   <Name>Do not dispose objects multiple times</Name>
+   <Description>A correctly implemented Dispose method can be called multiple times without throwing an exception. However, this is not guaranteed and to avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.</Description>
+   <Resolution Name="Default">Object {0} can be disposed more than once in method {1}. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 874</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182334.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="15.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>
