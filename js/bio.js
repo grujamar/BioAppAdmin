@@ -37,3 +37,11 @@ function changepassFalse() {
         type: 'OK'
     });
 };
+
+function modalVisibleHide() {
+    $("#divModal").hide();
+};
+
+function modalVisibleShow() {
+    $("#divModal").show();
+};

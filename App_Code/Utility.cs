@@ -827,6 +827,39 @@ WHERE        (IDLokacija = @idlokacije)";
         }
     }
 
+    public void upisivanjePrisustvaRucnoAdmin(string brojIndeksa, int idTerminPredavanja, out int result)
+    {
+        using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
+        {
+            using (SqlCommand objCmd = new SqlCommand("spUpisivanjePrisustvaRucnoAdmin", objConn))
+            {
+                try
+                {
+                    objCmd.CommandType = CommandType.StoredProcedure;
+
+                    objCmd.Parameters.AddWithValue("@brojIndeksa", brojIndeksa);
+                    objCmd.Parameters.Add("@idTerminPredavanja", System.Data.SqlDbType.Int).Value = idTerminPredavanja;
+
+                    objCmd.Parameters.Add("@err", System.Data.SqlDbType.Int);
+                    objCmd.Parameters["@err"].Direction = ParameterDirection.ReturnValue;
+
+                    objConn.Open();
+                    objCmd.ExecuteNonQuery();
+
+                    //Retrieve the value of the output parameter
+                    result = Convert.ToInt32(objCmd.Parameters["@err"].Value);
+
+                    objConn.Close();
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Error in function upisivanjePrisustvaRucnoAdmin. " + ex.Message);
+                    throw new Exception("Error in function upisivanjePrisustvaRucnoAdmin. " + ex.Message);
+                }
+            }
+        }
+    }
+
 
     public void brisanjePredavanjaIzTermina(int IDTerminPredavanja, out int result)
     {

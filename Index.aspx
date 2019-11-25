@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Index</title>
+    <title>Izaberi predavanje-Admin</title>
     <!--#include virtual="~/content/head.inc"-->
     <script src="js/jquery.tooltip.js" type="text/javascript"></script>
     <link href="css/modal-style.css" rel="stylesheet" type="text/css"/>
@@ -65,18 +65,18 @@
                     <!--header navigation start-->
 			        <div class="collapse navbar-collapse" id="main-menu">
 				        <article id="IdForModal" class="navbar-nav ml-auto mt-2 px-lg-5">
-                            <asp:Button ID="btnOpenModal" runat="server" CssClass="openModalButton" Text="Promeni lozinku" OnClick="btnOpenModal_Click" />
+                            <asp:Button ID="btnOpenModal" runat="server" CssClass="openModalButton" Text="Promeni lozinku" OnClick="btnOpenModal_Click" />                
                             <br />
-                            <div id="divModal" runat="server" class ="modalDialog" visible="false">
+                            <div id="divModal" runat="server" class="modalDialog">
                                 <div>
                                     <asp:LinkButton ID="lbtnModalClose" runat="server"  CssClass="close" Text="X" OnClick="CloseModal_Click" />
                                     <h2>Promeni lozinku</h2>
                                     <p>Upiši parametre za promenu.</p>
-                                    <asp:TextBox ID="txtUsername" runat="server" CssClass="txtmodal mb-2" maxlength="25" TabIndex="1" placeholder="Korisničko ime"></asp:TextBox>
+                                    <asp:TextBox ID="txtUsername" runat="server" CssClass="txtmodal mb-2" maxlength="25" TabIndex="1" placeholder="Korisničko ime" ontextchanged="txtUsername_TextChanged"></asp:TextBox>
                                     <br/>
                                     <asp:CustomValidator runat="server" id="cvUsername" controltovalidate="txtUsername" errormessage="" OnServerValidate="cvUsername_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px;" ValidateEmptyText="true"/>
                                     <br/>
-                                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="txtmodal mb-2" maxlength="15" TabIndex="2" placeholder="Lozinka"></asp:TextBox>
+                                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="txtmodal mb-2" maxlength="15" TabIndex="2" placeholder="Lozinka" ontextchanged="txtPassword_TextChanged"></asp:TextBox>
                                     <br/>
                                     <asp:CustomValidator runat="server" id="cvPassword" controltovalidate="txtPassword" errormessage="" OnServerValidate="cvPassword_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px;" ValidateEmptyText="true"/>
                                     <br/>
@@ -119,13 +119,13 @@
                     <asp:UpdatePanel id="UpdatePanel3" runat="server">
                         <ContentTemplate>
                             <fieldset>
-                                <div class="row text-center">
+                                <div class="row">
                                     <div class="col-12 col-md-5 mb-1">
                                         <!--div date start-->
-                                        <div class="col-12 col-lg-2 mb-1 mb-md-2">
+                                        <div class="col-12 mb-1 mb-md-2 text-left">
                                             <asp:Label id="spandate" runat="server" CssClass="submit-span">*</asp:Label><asp:Label id="lbldate" runat="server" CssClass="submit-label ml-2">Datum:</asp:Label>
                                         </div>
-                                        <div class="col-12 col-lg-10">
+                                        <div class="col-12 ">
                                             <div class="row">
                                                 <div class="col-12 mb-1">
                                                     <asp:TextBox ID="txtdate" runat="server" CssClass="submit-textbox" maxlength="10" TabIndex="2" AutoPostBack="true"></asp:TextBox>
@@ -138,7 +138,7 @@
                                         </div><!--div date end-->
                                     </div>
                                     <div class="col-12 col-md-5 mb-1">
-                                        <asp:Button ID="btnSearch" runat="server" Text="Pretraži predavanja" CssClass="btn btn-danger mt-md-4" OnClick="btnSearch_Click" OnClientClick="unhook()"/>
+                                        <asp:Button ID="btnSearch" runat="server" Text="Pretraži predavanja" CssClass="btn btn-danger btn-sm mt-md-4" OnClick="btnSearch_Click" OnClientClick="unhook()"/>
                                     </div>
                                 </div>
                             </fieldset>

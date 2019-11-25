@@ -50,18 +50,15 @@ document.onkeypress = function (event) {
     if (event.keyCode == 123) {
         return false;
     }
-    if (event.keyCode == 116) {
-        return false;
-    }
 
     if (event.ctrlKey &&
         (event.keyCode === 85 ||
-        event.keyCode === 123 ||
-        event.keyCode === 116)) {
+        event.keyCode === 123)) {
         alert('not allowed');
         return false;
     }
 }
+
 document.onmousedown = function (event) {
     event = (event || window.event);
     if (event.keyCode == 123) {

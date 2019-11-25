@@ -123,7 +123,7 @@
                                 </section>
                             </div>
                             <div class="col-12 col-md-4 mb-1 text-left">
-                                <section class="right-section mt-4">
+                                <section class="right-section mt-4 mb-lg-5">
                                     <div class="mb-2">
                                         <asp:Label id="lblTimeStart" runat="server" style="font-weight:bold;font-size:13px;">Početak</asp:Label>
                                         <asp:TextBox ID="txtTimeStart" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="3" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
@@ -139,9 +139,13 @@
                                         <asp:Label ID="errStoredProcedure" runat="server" style="font-size:13px; font-weight:bold;" ForeColor="Red"></asp:Label>
                                     </div>
                                 </section>
+                                <section>
+                                    <div class="col-12">
+                                        <asp:Button ID="btnEdit" runat="server" Text="Izmeni predavanje" CssClass="btn btn-danger btn-lg px-5" OnClick="btnEdit_Click" OnClientClick="unhook()"/>
+                                    </div>
+                                </section>
                             </div>
                         </div>
-                        
                         <div class="row" runat="server" id="afterChangingTime1">
                             <div class="col-12 col-md-2 mb-1">
                             </div>

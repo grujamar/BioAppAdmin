@@ -67,7 +67,7 @@ public partial class login : System.Web.UI.Page
                     Session["loginAdmin_IDLogAdmin"] = IDLogAdmin;
 
                     string PageToRedirect = "index.aspx";
-                    Response.Redirect(string.Format("~/" + PageToRedirect), false);
+                    Response.Redirect(PageToRedirect, false);
                 }
             }
             else if (!Page.IsValid)

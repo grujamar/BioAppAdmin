@@ -31,6 +31,7 @@ public partial class Index : System.Web.UI.Page
 
         if (!Page.IsPostBack)
         {
+            divModal.Visible = false;
             int IDLogAdmin = Convert.ToInt32(Session["loginAdmin_IDLogAdmin"]);
             if (IDLogAdmin != 0)
             {
@@ -79,8 +80,7 @@ public partial class Index : System.Web.UI.Page
             else
             {
                 Session["loginAdmin_IDLogAdmin"] = 0;
-
-                Response.Redirect(string.Format("~/login.aspx"), false);
+                Response.Redirect("login.aspx", false);
             }
         }
         catch (Exception ex)
@@ -100,11 +100,15 @@ public partial class Index : System.Web.UI.Page
     {
         divModal.Visible = true;
         txtUsername.Text = string.Empty;
+        btnInsertNewLecture.TabIndex = -1;
+        txtdate.TabIndex = -1;
     }
 
     protected void CloseModal_Click(object sender, EventArgs e)
     {
         divModal.Visible = false;
+        btnInsertNewLecture.TabIndex = 1;
+        txtdate.TabIndex = 2;
     }
 
     protected void btnChange_Click(object sender, EventArgs e)
@@ -126,19 +130,22 @@ public partial class Index : System.Web.UI.Page
                 }
                 else
                 {
-                    divModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, GetType(), "changepassOK", "changepassOK();", true);
+                    //divModal.Visible = false;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "modalVisibleHide", "modalVisibleHide();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "changepassOK", "changepassOK();", true);   
                 }
             }
             else if (!Page.IsValid)
             {
-                divModal.Visible = true;
+                //divModal.Visible = true;
+                ScriptManager.RegisterStartupScript(this, GetType(), "modalVisibleShow", "modalVisibleShow();", true);
             }
         }
         catch (Exception ex)
         {
             log.Error("Error while trying to change password. " + ex.Message);
-            divModal.Visible = false;
+            //divModal.Visible = false;
+            ScriptManager.RegisterStartupScript(this, GetType(), "modalVisibleHide", "modalVisibleHide();", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "changepassFalse", "changepassFalse();", true);
         }
     }
@@ -195,7 +202,7 @@ public partial class Index : System.Web.UI.Page
         {
             if (txtNewPassword.Text != string.Empty)
             {
-                args.IsValid = txtRepeatNewPassword.Equals(txtNewPassword.Text);
+                args.IsValid = (txtRepeatNewPassword.Text).Equals(txtNewPassword.Text);
                 if (!args.IsValid)
                 {
                     cvRepeatNewPassword.ErrorMessage = Constants.ComparePasswordError;
@@ -323,6 +330,52 @@ public partial class Index : System.Web.UI.Page
                 log.Info("Error while opening the Page: " + PageToRedirect + " . Error message: " + ex.Message);
                 throw new Exception("Error while opening the Page: " + PageToRedirect + " . Error message: " + ex.Message);
             }
+        }
+    }
+
+
+    protected void txtUsername_TextChanged(object sender, EventArgs e)
+    {
+        if (cvUsername.Text != string.Empty)
+        {
+            Session["index-event_controle"] = ((TextBox)sender);
+            SetFocusOnTextbox();
+        }
+        else
+        {
+            Session["index-event_controle"] = txtPassword;
+            SetFocusOnTextbox();
+        }
+    }
+
+    protected void txtPassword_TextChanged(object sender, EventArgs e)
+    {
+        if (cvPassword.Text != string.Empty)
+        {
+            Session["index-event_controle"] = ((TextBox)sender);
+            SetFocusOnTextbox();
+        }
+        else
+        {
+            Session["index-event_controle"] = txtNewPassword;
+            SetFocusOnTextbox();
+        }
+    }
+
+    public void SetFocusOnTextbox()
+    {
+        try
+        {
+            if (Session["index-event_controle"] != null)
+            {
+                TextBox controle = (TextBox)Session["index-event_controle"];
+                //controle.Focus();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "foc", "document.getElementById('" + controle.ClientID + "').focus();", true);
+            }
+        }
+        catch (InvalidCastException inEx)
+        {
+            log.Error("Problem with setting focus on control. Error: " + inEx);
         }
     }
 

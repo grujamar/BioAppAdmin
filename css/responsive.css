@@ -97,6 +97,10 @@
     .section-gridview .gridview-right-side {
         margin-right: 200px;
     }
+
+    .mb-lg-5 {
+        margin-bottom: 5rem !important;
+    }
 }
 
 @media(min-width:1130px) {
