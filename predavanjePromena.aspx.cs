@@ -275,7 +275,7 @@ public partial class predavanjePromena : System.Web.UI.Page
             string ErrorMessage = string.Empty;
             string IDItem = "0";
 
-            args.IsValid = Utils.ValidateIzbor(ddlizbor.SelectedValue, IDItem, out ErrorMessage);
+            args.IsValid = Utils.ValidateDropDownList(ddlizbor.SelectedValue, IDItem, "Tip predavanja je obavezno polje. ", out ErrorMessage);
             cvizbor.ErrorMessage = ErrorMessage;
         }
         catch (Exception)

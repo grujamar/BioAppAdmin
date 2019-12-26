@@ -29,6 +29,9 @@ public partial class Index : System.Web.UI.Page
         AvoidCashing();
         ShowDatepicker();
 
+        //todo Skinuti, trenutno stavljeno
+        Response.Redirect("novoPredavanje.aspx");
+
         if (!Page.IsPostBack)
         {
             divModal.Visible = false;

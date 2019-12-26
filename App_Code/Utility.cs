@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -1036,6 +1037,84 @@ WHERE        (IDLokacija = @idlokacije)";
                 {
                     log.Error("Error in function spPromenaVremenaTerminaAdmin. " + ex.Message);
                     throw new Exception("Error in function spPromenaVremenaTerminaAdmin. " + ex.Message);
+                }
+            }
+        }
+    }
+
+
+    private DataTable CreateDataTable(IList<Int32> item)
+    {
+        Type type = typeof(Int32);
+        var properties = type.GetProperties();
+
+        DataTable dataTable = new DataTable();
+        foreach (PropertyInfo info in properties)
+        {
+            dataTable.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType));
+        }
+
+        foreach (Int32 entity in item)
+        {
+            object[] values = new object[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                values[i] = properties[i].GetValue(entity);
+            }
+
+            dataTable.Rows.Add(values);
+        }
+        return dataTable;
+    }
+
+    public void spUpisivanjeOdrzanogPredavanjaAdmin(int idLokacija, DateTime Datum, TimeSpan Pocetak, TimeSpan Kraj, decimal procenatZaPriznavanje, int IdOsoba, List<int> ListaPredmeta, int idTipPredavanja, out int result)
+    {
+        using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
+        {
+            using (SqlCommand objCmd = new SqlCommand("spUpisivanjeOdrzanogPredavanjaAdmin", objConn))
+            {
+                try
+                {
+                    using (var table = new DataTable())
+                    {
+                        objCmd.CommandType = CommandType.StoredProcedure;
+
+                        objCmd.Parameters.Add("@IDLokacija", System.Data.SqlDbType.Int).Value = idLokacija;
+                        objCmd.Parameters.AddWithValue("@Datum", Datum);
+                        objCmd.Parameters.AddWithValue("@pocetak", Pocetak);
+                        objCmd.Parameters.AddWithValue("@kraj", Kraj);
+                        objCmd.Parameters.Add("@procenatZaPriznavanje", System.Data.SqlDbType.Decimal).Value = procenatZaPriznavanje;
+                        objCmd.Parameters.Add("@idOsoba", System.Data.SqlDbType.Int).Value = IdOsoba;
+
+                        table.Columns.Add("IDPredmet", typeof(string));
+
+                        for (int i = 0; i < ListaPredmeta.Count; i++)
+                            table.Rows.Add(ListaPredmeta[i]);
+
+                        var pList = new SqlParameter("@ListaPredmeta", SqlDbType.Structured);
+                        pList.TypeName = "dbo.IntegerList";
+                        pList.Value = table;
+
+                        objCmd.Parameters.Add(pList);
+
+                        objCmd.Parameters.Add("@idTipPredavanja", System.Data.SqlDbType.Int).Value = idTipPredavanja;
+
+                        objCmd.Parameters.Add("@err", System.Data.SqlDbType.Int);
+                        objCmd.Parameters["@err"].Direction = ParameterDirection.ReturnValue;
+
+                        objConn.Open();
+                        objCmd.ExecuteNonQuery();
+
+                        //Retrieve the value of the output parameter
+                        result = Convert.ToInt32(objCmd.Parameters["@err"].Value);
+
+                        objConn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Error in function spUpisivanjeOdrzanogPredavanjaAdmin. " + ex.Message);
+                    throw new Exception("Error in function spUpisivanjeOdrzanogPredavanjaAdmin. " + ex.Message);
                 }
             }
         }

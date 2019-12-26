@@ -95,7 +95,9 @@ margin-top: 4px;
 }
 
 .izbor-section .submit-span,
-.search-section .submit-span{
+.search-section .submit-span,
+#submit .submit-span,
+#submitInsert1 .submit-span {
     color: red;
     font-weight: bold;
     font-size: 1rem;
@@ -106,14 +108,18 @@ margin-top: 4px;
 }
 
 .search-section .submit-label,
-.izbor-section .submit-label {
+.izbor-section .submit-label,
+#submit .submit-label,
+#submitInsert1 .submit-label {
     font-weight: bold;
     font-size: 14px;
 }
 
 .izbor-section .submit-textbox,
 .izbor-section .price-textbox,
-.izbor-section .submit-textbox {
+.izbor-section .submit-textbox,
+#submit .submit-textbox,
+#submitInsert .submit-textbox {
     font-size: 14px;
     border: 1.5px solid #bdbdbd;
     background: rgba(255,255,255,0);
@@ -132,24 +138,40 @@ margin-top: 4px;
     width: 80%;
 }
 
-.izbor-section .submit-textbox:focus,
-.izbor-section .price-textbox:focus,
-.izbor-section .submit-dropdownlist:focus,
-.search-section .submit-textbox:focus,
-.search-section .submit-dropdownlist:focus {
-    background: rgba(220,220,220,0.3);
-    color: #000;
-    border: 1.5px solid darkgray;
-    box-shadow: none;
+#submit .submit-dropdownlist {
+    font-size: 14px;
+    border: 1.5px solid #bdbdbd;
+    background: rgba(255,255,255,0);
+    box-shadow: 0 0 1px #bdbdbd inset;
+    padding: 3px 10px;
+    width: 100%;
 }
 
-.izbor-section .submit-example {
+#submitInsert .submit-dropdownlist {
+    font-size: 14px;
+    border: 1.5px solid #bdbdbd;
+    background: rgba(255,255,255,0);
+    box-shadow: 0 0 1px #bdbdbd inset;
+    padding: 3px 10px;
+    width: 40%;
+}
+
+.izbor-section .submit-textbox:focus, .izbor-section .price-textbox:focus, .izbor-section .submit-dropdownlist:focus, .search-section .submit-textbox:focus, .search-section .submit-dropdownlist:focus, #submit .submit-textbox:focus, #submit .submit-dropdownlist:focus {
+background: rgba(220,220,220,0.3);
+color: #000;
+border: 1.5px solid darkgray;
+box-shadow: none;
+}
+
+.izbor-section .submit-example,
+#submit .submit-example{
     font-weight: bold;
     font-size: 14px;
     margin-right: 10px;
 }
 
-.submit-customValidator {
+.submit-customValidator,
+#submit .submit-customValidator {
     font-size: 14px;
     font-weight: bold;
     color: red;

@@ -124,14 +124,14 @@ public static class Utils
     }
 
 
-    public static bool ValidateIzbor(string SelectedValue, string IDItem, out string ErrorMessage)
+    public static bool ValidateDropDownList(string SelectedValue, string IDItem, string ErrorMsg, out string ErrorMessage)
     {
         bool returnValue = true;
         ErrorMessage = string.Empty;
 
         if (SelectedValue == IDItem)
         {
-            ErrorMessage = "Tip predavanja je obavezno polje. ";
+            ErrorMessage = ErrorMsg;
             returnValue = false;
         }
         else
@@ -141,6 +141,8 @@ public static class Utils
 
         return returnValue;
     }
+
+   
     /*
     public static bool ValidateFactureNumber(string FactureNumber, out string ErrorMessage)
     {
