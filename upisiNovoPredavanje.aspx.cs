@@ -28,7 +28,7 @@ public partial class upisiNovoPredavanje : System.Web.UI.Page
         try
         {
             string encryptedParameters = Request.QueryString["d"];
-            log.Info(" encryptedParameters on Index page - " + encryptedParameters);
+            //log.Info(" encryptedParameters on Index page - " + encryptedParameters);
 
             if ((encryptedParameters != string.Empty) && (encryptedParameters != null))
             {
@@ -51,15 +51,12 @@ public partial class upisiNovoPredavanje : System.Web.UI.Page
                 if (!Page.IsPostBack)
                 {
                     Session["UpisiNovoPredavanje-idOsoba"] = 0;
+                    Session["UpisiNovoPredavanje_uspesnoUpisano"] = 0;
 
                     if (Convert.ToInt32(Session["Predavanje_idTerminPredavanjaIzmena"]) == 0)
                     {
-                        int IDTerminPredavanja = 0;
                         int IDLokacija = Convert.ToInt32(Session["NovoPredavanje-idLokacija"]);
-                        int IDLogPredavanja = 0;
                         List<int> predmetiList = new List<int>();
-                        TimeSpan d1 = new TimeSpan();
-
                     }
                 }
             }
@@ -84,8 +81,18 @@ public partial class upisiNovoPredavanje : System.Web.UI.Page
 
     protected void btnBack_Click(object sender, EventArgs e)
     {
-        string PageToRedirect = "novoPredavanje.aspx";
+        string pageName = "Index.aspx";
+        PageToRedirect(pageName);
+    }
 
+    protected void btnStartPage_Click(object sender, EventArgs e)
+    {
+        string pageName = "Index.aspx";
+        PageToRedirect(pageName);
+    }
+
+    protected void PageToRedirect(string PageToRedirect)
+    {
         try
         {
             Response.Redirect(PageToRedirect, false);
@@ -302,7 +309,8 @@ public partial class upisiNovoPredavanje : System.Web.UI.Page
                 }
                 else
                 {
-                    Response.Redirect("Index.aspx", false);
+                    Session["UpisiNovoPredavanje_uspesnoUpisano"] = 1;
+                    Response.Redirect("novoPredavanje.aspx", false);
                 }
             }
             else if (!Page.IsValid)

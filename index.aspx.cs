@@ -30,7 +30,7 @@ public partial class Index : System.Web.UI.Page
         ShowDatepicker();
 
         //todo Skinuti, trenutno stavljeno
-        Response.Redirect("novoPredavanje.aspx");
+        //Response.Redirect("novoPredavanje.aspx");
 
         if (!Page.IsPostBack)
         {

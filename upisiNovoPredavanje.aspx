@@ -24,7 +24,8 @@
                     <!--header navigation start-->
 			        <div class="collapse navbar-collapse" id="main-menu">
 				        <article class="navbar-nav ml-auto mt-2 px-lg-5">
-                            <asp:Button ID="btnBack" runat="server" Text="Nazad" CssClass="btn btn-outline-secondary ml-4 px-md-3 py-md-1" OnClick="btnBack_Click" OnClientClick="unhook()"/>
+                            <asp:Button ID="btnStartPage" runat="server" Text="Početna strana" CssClass="btn btn-link ml-2 px-md-3 py-md-1" OnClick="btnStartPage_Click" OnClientClick="unhook()"/>
+                            <asp:Button ID="btnBack" runat="server" Text="Nazad" CssClass="btn btn-outline-secondary ml-4 px-md-5 py-md-1" OnClick="btnBack_Click" OnClientClick="unhook()"/>
 				        </article>                        
 			        </div><!--header navigation end-->
                 </nav>
@@ -32,13 +33,21 @@
         </header><!--header end-->
         <!--main start-->
         <main>
+            <!--lead-section start-->
+            <section class="lead-section my-4">
+                <div class="container">
+                    <asp:Label id="lblstranicanaziv" runat="server" CssClass="page-name">
+                        Upišite novo predavanje
+                    </asp:Label>
+                </div>
+            </section><!--lead-section end-->
             <div id="beforeStarting" runat="server">
                 <div class="container">
                     <div class="row">
 
                     </div>
                     <!--div ddlLocation start-->
-                    <div id="submitInsert1" class="col-12 col-lg-2 mb-1 mb-md-4 mt-md-4">
+                    <div id="submitInsert1" class="col-12 col-lg-2 mb-1 mb-md-2 mt-md-4">
                         <asp:Label id="spanIDOsoba" runat="server" CssClass="submit-span">*</asp:Label><asp:Label id="lblIDOsoba" runat="server" CssClass="submit-label ml-2">Osoba:</asp:Label> 
                     </div>
                     <div class="col-12 col-lg-10">

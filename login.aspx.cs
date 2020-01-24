@@ -55,8 +55,11 @@ public partial class login : System.Web.UI.Page
 
                 Utility utility = new Utility();
 
+                string passwordEncryption = AuthenticatedEncryption.AuthenticatedEncryption.Encrypt(txtPassword.Text, Constants.CryptKey, Constants.AuthKey);
+                passwordEncryption = passwordEncryption.Replace("+", "%252b");
+
                 utility.loginAdmin(txtUsername.Text, txtPassword.Text, out IDLogAdmin, out Result);
-                log.Debug("Login Admin: " + "Username - " + txtUsername.Text + " " + ". Password - " + txtPassword.Text + " " + ". IDLogAdmin - " + IDLogAdmin + " " + ". Rezultat - " + Result);
+                log.Debug("Login Admin: " + "Username - " + txtUsername.Text + " " + ". Password - " + passwordEncryption + " " + ". IDLogAdmin - " + IDLogAdmin + " " + ". Rezultat - " + Result);
 
                 if (Result != 0)
                 {

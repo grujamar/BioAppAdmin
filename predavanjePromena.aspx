@@ -7,6 +7,8 @@
 <head runat="server">
     <title>Predavanje promena</title>
     <!--#include virtual="~/content/head.inc"-->
+    <!--Jquery BlockUI-->
+    <script src="Js/jquery.blockUI.js"></script>
     <script src="js/jquery.tooltip.js" type="text/javascript"></script>
     <script type="text/javascript">
         function TooltipImages() {
@@ -47,6 +49,29 @@
             });
         }
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnEdit').click(function () {
+                $.blockUI({
+                    message: '<p style="font-size:20px; font-weight: bold;"><b>Molimo sačekajte...</b></p><img src="throbber.gif" runat="server" style="width:35px;height:35px;"/>',
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff',
+                        left: '25%',
+                        width: '50%',
+                        onBlock: function () {
+                            pageBlocked = true;
+                        }
+                    }
+                });
+            });
+        });
+      </script>
 </head>
 <body class="login-bg">
     <form id="form1" runat="server">
@@ -77,7 +102,7 @@
                 <section class="my-2">
                     <div class="container">
                         <div class="row">
-                            <div class="col-12 col-md-8 mb-1 text-left">
+                            <div class="col-12 col-md-8 text-left">
                                 <!--section checkbox start-->
                                 <section class="checkbox-section">
                                     <asp:Label 
@@ -104,7 +129,7 @@
                                             <asp:SessionParameter Name="idterminpredavanja" SessionField="predavanjePromena-IDTerminPredavanja" />
                                         </SelectParameters>
                                     </asp:SqlDataSource>
-                                    <asp:CustomValidator ID="cvCheckbox" runat="server" ErrorMessage="" Display="Dynamic" ForeColor="Red" CssClass="submit-customValidator" OnServerValidate="CheckBoxList1_ServerValidation" ValidationGroup="AddCustomValidatorToGroup"></asp:CustomValidator>
+                                    <asp:CustomValidator ID="cvCheckbox" runat="server" ErrorMessage="" Display="Dynamic" ForeColor="Red" CssClass="submit-customValidator" OnServerValidate="CheckBoxList1_ServerValidation" ValidationGroup="AddCustomValidatorToGroupChange"></asp:CustomValidator>
                                 </section><!--section checkbox end-->
                                 <section class="mb-5 search-section">
                                     <!--div ddlizbor start-->
@@ -118,30 +143,35 @@
                                         <asp:SqlDataSource ID="dsTipPredavanja" runat="server" ConnectionString="<%$ ConnectionStrings:BioConnectionString %>" SelectCommand="SELECT [IDTipPredavanja], [TipPredavanja] FROM [vTipPredavanja]"></asp:SqlDataSource>
                                     </div>
                                     <div class="col-12 col-lg-5 mb-3 mb-lg-0">
-                                        <asp:CustomValidator runat="server" id="cvizbor" controltovalidate="ddlizbor" errormessage="" OnServerValidate="Cvizbor_ServerValidate" CssClass="submit-customValidator" Display="Dynamic" ForeColor="Red" ValidateEmptyText="true" ValidationGroup="AddCustomValidatorToGroup"/>
+                                        <asp:CustomValidator runat="server" id="cvizbor" controltovalidate="ddlizbor" errormessage="" OnServerValidate="Cvizbor_ServerValidate" CssClass="submit-customValidator" Display="Dynamic" ForeColor="Red" ValidateEmptyText="true" ValidationGroup="AddCustomValidatorToGroupChange"/>
                                     </div><!--div ddlizbor end-->
+                                </section>
+                                 <section class="mb-5">
+                                    <div class="col-12">
+                                        <asp:Button ID="btnEdit" runat="server" Text="Sačuvaj izmene" CssClass="btn btn-danger btn-lg px-5 pl-5" OnClick="btnEdit_Click" OnClientClick="unhook()"/>
+                                    </div>
                                 </section>
                             </div>
                             <div class="col-12 col-md-4 mb-1 text-left">
                                 <section class="right-section mt-4 mb-lg-5">
-                                    <div class="mb-2">
-                                        <asp:Label id="lblTimeStart" runat="server" style="font-weight:bold;font-size:13px;">Početak</asp:Label>
-                                        <asp:TextBox ID="txtTimeStart" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="3" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
-                                        <asp:CustomValidator runat="server" id="cvTimeStart" controltovalidate="txtTimeStart" errormessage="" OnServerValidate="cvTimeStart_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px; font-weight:bold;" ValidateEmptyText="true"/>
-                                    </div>
-                                    <div class="mb-2">
-                                        <asp:Label id="lblTimeEnd" runat="server" style="font-weight:bold;font-size:13px;">Kraj</asp:Label>
-                                        <asp:TextBox ID="txtTimeEnd" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="4" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
-                                        <asp:CustomValidator runat="server" id="cvTimeEnd" controltovalidate="txtTimeEnd" errormessage="" OnServerValidate="cvTimeEnd_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px; font-weight:bold;" ValidateEmptyText="true"/>
-                                    </div>
-                                    <div class="mb-2 mt-4">
-                                        <asp:Button ID="btnChangeTime" runat="server" CssClass="btn btn-outline-secondary btn-sm px-1 ml-5" Text="Promeni vreme termina" OnClick="btnChangeTime_Click" OnClientClick="unhook()"/><br>
-                                        <asp:Label ID="errStoredProcedure" runat="server" style="font-size:13px; font-weight:bold;" ForeColor="Red"></asp:Label>
-                                    </div>
-                                </section>
-                                <section>
-                                    <div class="col-12">
-                                        <asp:Button ID="btnEdit" runat="server" Text="Izmeni predavanje" CssClass="btn btn-danger btn-lg px-5" OnClick="btnEdit_Click" OnClientClick="unhook()"/>
+                                    <div class="row">
+                                        <div class="col-12 col-mb-5">
+                                            <div class="mb-2">
+                                                <asp:Label id="lblTimeStart" runat="server" style="font-weight:bold;font-size:13px;">Početak</asp:Label>
+                                                <asp:TextBox ID="txtTimeStart" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="3" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
+                                                <asp:CustomValidator runat="server" id="cvTimeStart" controltovalidate="txtTimeStart" errormessage="" OnServerValidate="cvTimeStart_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px; font-weight:bold;" ValidateEmptyText="true"/>
+                                            </div>
+                                            <div class="mb-2">
+                                                <asp:Label id="lblTimeEnd" runat="server" style="font-weight:bold;font-size:13px;">Kraj</asp:Label>
+                                                <asp:TextBox ID="txtTimeEnd" runat="server" CssClass="submit-textbox" maxlength="8" TabIndex="4" ValidationGroup="ChangeTimeValidatorToGroup"></asp:TextBox>
+                                                <asp:CustomValidator runat="server" id="cvTimeEnd" controltovalidate="txtTimeEnd" errormessage="" OnServerValidate="cvTimeEnd_ServerValidate" Display="Dynamic" ForeColor="Red" style="font-size:13px; font-weight:bold;" ValidateEmptyText="true"/>
+                                            </div>
+                                            <div class="mb-2 mt-4">
+                                                <asp:Button ID="btnChangeTime" runat="server" CssClass="btn btn-outline-secondary btn-sm px-1 ml-5" Text="Promeni vreme termina" OnClick="btnChangeTime_Click" OnClientClick="unhook()"/><br>
+                                                <asp:Label ID="errStoredProcedure" runat="server" style="font-size:13px; font-weight:bold;" ForeColor="Red"></asp:Label>
+                                            </div>
+                                        </div>
+                                       
                                     </div>
                                 </section>
                             </div>

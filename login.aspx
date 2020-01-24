@@ -5,6 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Login-Admin</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="css/style-login.css" rel="stylesheet" type="text/css"/>

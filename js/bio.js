@@ -1,6 +1,6 @@
 ﻿function successalert() {
     swal({
-        title: 'Uspešno uneta faktura.',
+        title: 'Uspešno uneti podaci.',
         text: '',
         type: 'OK'
     });

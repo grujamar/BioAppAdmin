@@ -109,7 +109,7 @@
                         <div class="col-12 col-md-4 mb-1">
                         </div>
                         <div class="col-12 col-md-4 mb-1 text-center">
-                            <asp:Button ID="btnInsertNewLecture" runat="server" Text="Upiši novo predavanje" CssClass="btn btn-outline-success" OnClick="btnInsertNewLecture_Click" OnClientClick="unhook()" TabIndex="1"/>
+                            <asp:Button ID="btnInsertNewLecture" runat="server" Text="Upiši novo predavanje" CssClass="btn btn-outline-danger" OnClick="btnInsertNewLecture_Click" OnClientClick="unhook()" TabIndex="1"/>
                         </div>
                         <div class="col-12 col-md-4 mb-1">
                         </div><!--div new lecture end-->

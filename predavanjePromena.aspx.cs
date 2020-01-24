@@ -242,7 +242,7 @@ public partial class predavanjePromena : System.Web.UI.Page
             string ErrorMessage = string.Empty;
             Utility utility = new Utility();
             // Create the list to store.
-            List<string> CheckBoxList = new List<string>();
+            List<int> CheckBoxList = new List<int>();
 
             List<int> BrojAkreditacijeList = new List<int>();
             // Loop through each item.
@@ -251,11 +251,13 @@ public partial class predavanjePromena : System.Web.UI.Page
                 if (item.Selected)
                 {
                     // If the item is selected, add the value to the list.
-                    CheckBoxList.Add(item.Value);
+                    CheckBoxList.Add(Convert.ToInt32(item.Value));
                     int brojAkreditacije = utility.getBrojAkreditacije(item.ToString());
                     BrojAkreditacijeList.Add(brojAkreditacije);
                 }
             }
+
+            Session["PredavanjePromena_predmetiList"] = CheckBoxList;
 
             int sizeOfList = CheckBoxList.Count;
             args.IsValid = Utils.ValidateListSize(sizeOfList, BrojAkreditacijeList, out ErrorMessage);
@@ -290,6 +292,7 @@ public partial class predavanjePromena : System.Web.UI.Page
         int SelectedValue = Convert.ToInt32(ddlizbor.SelectedValue);
         if (SelectedValue != 0)
         {
+            Session["PredavanjePromena-idTipPredavanja"] = SelectedValue;
             Session["Predavanja-event_controle-DropDownList"] = ((DropDownList)sender);
             SetFocusOnDropDownLists();
         }
@@ -385,6 +388,8 @@ public partial class predavanjePromena : System.Web.UI.Page
                 else
                 {
                     ChangeVisibilityAfterChangingTime(true);
+                    errStoredProcedure.Text = string.Empty;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "successalert", "successalert();", true);
                 }
             }
             else if (!Page.IsValid)
@@ -436,56 +441,36 @@ public partial class predavanjePromena : System.Web.UI.Page
         }
     }
 
-
-
-
-
     /*EDIT*/
     protected void btnEdit_Click(object sender, EventArgs e)
     {
         try
         {
-            decimal procenatZaPriznavanje = 50.00m;
-            int Result = 0;
-
             Utility utility = new Utility();
 
-            //utility.zavrsavanjePredavanja(item, d1TimeSpanTrimmed, procenatZaPriznavanje, out Result);
-            //log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "Zavrsavanje predavanja : " + " IdPredavanje - " + item + " " + ". Kraj - " + d1TimeSpanTrimmed + " " + ". ProcenatZaPriznavanje - " + procenatZaPriznavanje + " " + ". Rezultat - " + Result);
-            //if (Result != 0)
-            //{
-            //    throw new Exception("Result from database is diferent from 0. Result is: " + Result);
-            //}
+            Page.Validate("AddCustomValidatorToGroupChange");
 
+            if (Page.IsValid)
+            {
+                List<int> CheckBoxListFinal = new List<int>();
+                CheckBoxListFinal = (List<int>)Session["PredavanjePromena_predmetiList"];
+                int idTipPredavanja = Convert.ToInt32(Session["PredavanjePromena-idTipPredavanja"]);
 
-            //utility.zavrsavanjeTermina(Convert.ToInt32(Session["Predavanje_idTerminPredavanja"]), d1TimeSpanTrimmed, out Result);
-            //log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "Zavrsavanje termina : " + " IdTerminPredavanja - " + Convert.ToInt32(Session["Predavanje_idTerminPredavanja"]) + " " + ". Kraj - " + d1TimeSpanTrimmed + " " + ". Rezultat - " + Result);
-            //if (Result != 0)
-            //{
-            //    throw new Exception("Result from database is diferent from 0. Result is: " + Result);
-            //}
-            //else
-            //{
-            //    //Session["login_IDLogPredavanja"] = null;
-            //    btnLogout.Enabled = true;
-            //    string PageToRedirect = "index.aspx";
-            //    int idTerminPredavanjaIzmena = 0;
-            //    try
-            //    {
-            //        string idTerminPredavanjaIzmena1 = @"IDTerminPredavanja=" + idTerminPredavanjaIzmena;
-            //        log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "idTerminPredavanjaIzmena is - " + idTerminPredavanjaIzmena1);
-            //        string editParameters = AuthenticatedEncryption.AuthenticatedEncryption.Encrypt(idTerminPredavanjaIzmena1, Constants.CryptKey, Constants.AuthKey);
-            //        editParameters = editParameters.Replace("+", "%252b");
-            //        log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "Page to redirect. editParameters is - " + editParameters);
-            //        Response.Redirect(string.Format("~/" + PageToRedirect + "?d={0}", editParameters), false);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        log.Info(Session["login-ImeLokacijeZaLog"].ToString() + " - " + "Error while opening the Page: " + PageToRedirect + " . Error message: " + ex.Message);
-            //        throw new Exception("Error while opening the Page: " + PageToRedirect + " . Error message: " + ex.Message);
-            //    }
-            //}
-            //Session["idTerminPredavanja"] = Convert.ToInt32(Session["Predavanje_idTerminPredavanja"]);
+                utility.spIzmenaOdrzanogPredavanjaAdmin(IDTerminPredavanja, CheckBoxListFinal, idTipPredavanja, out int result);
+                if (result != 0)
+                {
+                    throw new Exception("Result from database is diferent from 0. Result is: " + result);
+                }
+                else
+                {
+                    //SUCCESS MESSAGE
+                    ScriptManager.RegisterStartupScript(this, GetType(), "successalert", "successalert();", true);
+                }
+            }
+            else if (!Page.IsValid)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "erroralert", "erroralert();", true);
+            }
         }
         catch (Exception ex)
         {

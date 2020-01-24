@@ -1121,6 +1121,54 @@ WHERE        (IDLokacija = @idlokacije)";
     }
 
 
+    public void spIzmenaOdrzanogPredavanjaAdmin(int idTerminPredavanja, List<int> ListaPredmeta, int idTipPredavanja, out int result)
+    {
+        using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
+        {
+            using (SqlCommand objCmd = new SqlCommand("spIzmenaOdrzanogPredavanjaAdmin", objConn))
+            {
+                try
+                {
+                    using (var table = new DataTable())
+                    {
+                        objCmd.CommandType = CommandType.StoredProcedure;
+
+                        objCmd.Parameters.Add("@idTerminPredavanja", System.Data.SqlDbType.Int).Value = idTerminPredavanja;
+
+                        table.Columns.Add("IDPredmet", typeof(string));
+
+                        for (int i = 0; i < ListaPredmeta.Count; i++)
+                            table.Rows.Add(ListaPredmeta[i]);
+
+                        var pList = new SqlParameter("@ListaPredmeta", SqlDbType.Structured);
+                        pList.TypeName = "dbo.IntegerList";
+                        pList.Value = table;
+
+                        objCmd.Parameters.Add(pList);
+
+                        objCmd.Parameters.Add("@idTipPredavanja", System.Data.SqlDbType.Int).Value = idTipPredavanja;
+
+                        objCmd.Parameters.Add("@err", System.Data.SqlDbType.Int);
+                        objCmd.Parameters["@err"].Direction = ParameterDirection.ReturnValue;
+
+                        objConn.Open();
+                        objCmd.ExecuteNonQuery();
+
+                        //Retrieve the value of the output parameter
+                        result = Convert.ToInt32(objCmd.Parameters["@err"].Value);
+
+                        objConn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Error in function spIzmenaOdrzanogPredavanjaAdmin. " + ex.Message);
+                    throw new Exception("Error in function spIzmenaOdrzanogPredavanjaAdmin. " + ex.Message);
+                }
+            }
+        }
+    }
+
     /*
     public List<vIzvestaji> pronadjiPromenljiveIzvestaj(int idOsoba)
     {

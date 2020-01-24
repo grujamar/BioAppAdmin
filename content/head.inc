@@ -4,7 +4,10 @@
 <meta name="author" content="Marko Grujic"/>
 <meta name="description" content="Stranica za započinjanje i odjavu predavanja."/>
 <meta name="keywords" content=""/>
-<link rel="shortcut icon" href="img/favicon.ico"/>
+<!-- 20min -->
+<meta http-equiv="refresh" content="1200">
+<!-- favicon -->
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 <!-- Bootstrap CSS -->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <!-- Font Awesome-->

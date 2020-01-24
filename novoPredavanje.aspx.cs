@@ -37,6 +37,11 @@ public partial class novoPredavanje : System.Web.UI.Page
             {
                 txtdate.BorderColor = ColorTranslator.FromHtml(SetGray);
                 ddlLocation.BorderColor = ColorTranslator.FromHtml(SetGray);
+                if (Convert.ToInt32(Session["UpisiNovoPredavanje_uspesnoUpisano"]) != 1)
+                {
+                    Session["NovoPredavanje-idLokacija"] = 0;
+                }
+                GridView1.DataBind();
             }
             else
             {
@@ -154,7 +159,13 @@ public partial class novoPredavanje : System.Web.UI.Page
 
     protected void btnBack_Click(object sender, EventArgs e)
     {
-        string PageToRedirect = "Index.aspx";
+        Session["UpisiNovoPredavanje_uspesnoUpisano"] = 0;
+        string pageName = "Index.aspx";
+        PageToRedirect(pageName);
+    }
+
+    protected void PageToRedirect(string PageToRedirect)
+    {
         try
         {
             Response.Redirect(PageToRedirect, false);

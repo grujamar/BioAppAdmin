@@ -64,7 +64,8 @@
                     <!--header navigation start-->
 			        <div class="collapse navbar-collapse" id="main-menu">
 				       <article class="navbar-nav ml-auto mt-2 px-lg-5">
-                            <asp:Button ID="btnBack" runat="server" Text="Nazad" CssClass="btn btn-success btn-lg px-5" OnClick="btnBack_Click" OnClientClick="unhook()"/>
+                            
+                            <asp:Button ID="btnBack" runat="server" Text="Nazad" CssClass="btn btn-outline-secondary ml-4 px-md-5 py-md-1" OnClick="btnBack_Click" OnClientClick="unhook()"/>
 				        </article>                  
 			        </div><!--header navigation end-->
                 </nav>
@@ -72,6 +73,14 @@
         </header><!--header end-->
         <!--main start-->
         <main>
+            <!--lead-section start-->
+            <section class="lead-section my-4">
+                <div class="container">
+                    <asp:Label id="lblstranicanaziv" runat="server" CssClass="page-name">
+                        Proverite predavanja za određeni datum
+                    </asp:Label>
+                </div>
+            </section><!--lead-section end-->
             <div class="container">
                 <section id="submit" class="mt-5 mb-5">
                     <asp:UpdatePanel id="UpdatePanel3" runat="server">
@@ -95,7 +104,7 @@
                                             </div>
                                         </div><!--div date end-->
                                         <!--div ddlLocation start-->
-                                        <div class="col-12 col-lg-2 mb-1 mb-md-4 mt-md-4">
+                                        <div class="col-12 col-lg-2 mb-1 mb-md-2 mt-md-4">
                                             <asp:Label id="spanLocation" runat="server" CssClass="submit-span">*</asp:Label><asp:Label id="lblLocation" runat="server" CssClass="submit-label ml-2">Lokacija:</asp:Label> 
                                         </div>
                                         <div class="col-12 col-lg-10">
@@ -147,7 +156,7 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>  
                     <section class="text-center mt-5">
-                        <asp:Button ID="btnSelectItems" runat="server" Text="Izaberi predmete" CssClass="btn btn-danger mt-md-4" OnClick="btnSelectItems_Click" OnClientClick="unhook()" TabIndex="4"/>
+                        <asp:Button ID="btnSelectItems" runat="server" Text="Dalje" CssClass="btn btn-danger mt-md-4 px-5" OnClick="btnSelectItems_Click" OnClientClick="unhook()" TabIndex="4"/>
                     </section>
                 </section><!--section GridView end-->
             </div>
