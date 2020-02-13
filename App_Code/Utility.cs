@@ -186,10 +186,9 @@ public class Utility
         List<int> responses = new List<int>();
 
         string upit = @"SELECT        dbo.Predavanje.IDPredmet
-                        FROM            dbo.TerminPredavanja INNER JOIN
-                         dbo.PredavanjeUTerminu ON dbo.TerminPredavanja.IDTerminPredavanja = dbo.PredavanjeUTerminu.IDTerminPredavanja INNER JOIN
+FROM            dbo.PredavanjeUTerminu INNER JOIN
                          dbo.Predavanje ON dbo.PredavanjeUTerminu.IDPredavanje = dbo.Predavanje.IDPredavanje
-                        WHERE        (dbo.TerminPredavanja.IDTerminPredavanja = @idterminpredavanja)";
+WHERE        (dbo.PredavanjeUTerminu.IDTerminPredavanja = @idterminpredavanja)";
 
         using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
         {
@@ -222,13 +221,10 @@ public class Utility
     {
         int IDTipPredavanja = 0;
 
-        string upit = @"SELECT        dbo.TipPredavanja.IDTipPredavanja
-FROM            dbo.TerminPredavanja INNER JOIN
-                         dbo.PredavanjeUTerminu ON dbo.TerminPredavanja.IDTerminPredavanja = dbo.PredavanjeUTerminu.IDTerminPredavanja INNER JOIN
-                         dbo.Predavanje ON dbo.PredavanjeUTerminu.IDPredavanje = dbo.Predavanje.IDPredavanje INNER JOIN
-                         dbo.Predmet ON dbo.Predavanje.IDPredmet = dbo.Predmet.IDPredmet INNER JOIN
-                         dbo.TipPredavanja ON dbo.Predavanje.IDTipPredavanja = dbo.TipPredavanja.IDTipPredavanja
-WHERE        (dbo.TerminPredavanja.IDTerminPredavanja = @idterminpredavanja)";
+        string upit = @"SELECT        dbo.Predavanje.IDTipPredavanja
+FROM            dbo.PredavanjeUTerminu INNER JOIN
+                         dbo.Predavanje ON dbo.PredavanjeUTerminu.IDPredavanje = dbo.Predavanje.IDPredavanje
+WHERE        (dbo.PredavanjeUTerminu.IDTerminPredavanja = @idterminpredavanja)";
 
         using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
         {
@@ -520,7 +516,7 @@ WHERE        (dbo.TerminPredavanja.IDTerminPredavanja = @idterminpredavanja)";
         }
     }
 
-
+    /*
     public List<TimeSpan> proveriKrajUTabeliTerminPredavanja(int idosoba)
     {
         try
@@ -562,8 +558,8 @@ WHERE        (dbo.TerminPredavanja.IDTerminPredavanja = @idterminpredavanja)";
             throw new Exception("Error in function proveriKrajUTabeliTerminPredavanja: " + ex.Message);
         }
     }
-
-
+    */
+    /*
     public void getTerminPredavanjaKraj(int idosoba, int IDLokacija, out int IDTerminPredavanja, out int IDLogPredavanja, out List<int> predmetiList, out TimeSpan d1)
     {
         IDTerminPredavanja=0;
@@ -608,13 +604,15 @@ WHERE        (dbo.TerminPredavanja.IDOsobaPredavac = @idosoba) AND (dbo.TerminPr
             }
         }
     }
-
+    */
 
     public string getPredmetNaziv(int idOsoba, int idPredmet)
     {
         string NazivPredmeta = string.Empty;
 
-        string upit = @"SELECT NazivPredmeta FROM dbo.vPredavanjaNastavnika WHERE (IDOsoba = @idosoba) AND (IDPredmet = @idpredmet)";
+        string upit = @"SELECT        SifraPredmeta + ' - ' + NazivPredmeta AS NazivPredmeta
+FROM            dbo.Predmet
+WHERE        (IDPredmet = @idPredmet)";
 
         using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
         {
@@ -648,12 +646,11 @@ WHERE        (dbo.TerminPredavanja.IDOsobaPredavac = @idosoba) AND (dbo.TerminPr
     {
         string tipPredavanja = string.Empty;
 
-        string upit = @"SELECT        dbo.TipPredavanja.TipPredavanja
-FROM            dbo.TerminPredavanja INNER JOIN
-                         dbo.PredavanjeUTerminu ON dbo.TerminPredavanja.IDTerminPredavanja = dbo.PredavanjeUTerminu.IDTerminPredavanja INNER JOIN
+        string upit = @"SELECT        TOP (1) dbo.TipPredavanja.TipPredavanja
+FROM            dbo.PredavanjeUTerminu INNER JOIN
                          dbo.Predavanje ON dbo.PredavanjeUTerminu.IDPredavanje = dbo.Predavanje.IDPredavanje INNER JOIN
                          dbo.TipPredavanja ON dbo.Predavanje.IDTipPredavanja = dbo.TipPredavanja.IDTipPredavanja
-WHERE        (dbo.TerminPredavanja.IDOsobaPredavac = @idosoba) AND (dbo.TerminPredavanja.IDTerminPredavanja = @idterminpredavanja) AND (dbo.TerminPredavanja.IDLokacija = @idlokacija)";
+WHERE        (dbo.PredavanjeUTerminu.IDTerminPredavanja = @idterminpredavanja)";
 
         using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
         {
@@ -761,9 +758,9 @@ WHERE        (IDLokacija = @idlokacije)";
     {
         int BrojAkreditacije = 0;
 
-        string upit = @"SELECT        TOP (1) PERCENT BrojAkreditacije
-                        FROM            dbo.vPredavanjaNastavnika
-                        WHERE        (NazivPredmeta = @nazivpredmeta)";
+        string upit = @"SELECT       TOP (1) LEN(SUBSTRING(SifraPredmeta, 0, CHARINDEX('-', SifraPredmeta, 0))) AS BrojAkreditacije
+														FROM            dbo.Predmet
+														WHERE        (SifraPredmeta + ' - ' + NazivPredmeta = @nazivpredmeta)";
 
         using (SqlConnection objConn = new SqlConnection(bioconnectionstring))
         {
